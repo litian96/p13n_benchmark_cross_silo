@@ -1,0 +1,7 @@
+.DS_Store
+*.zip
+figures/
+logs/
+scripts/
+stash/
+__pycache__/
