@@ -10,7 +10,7 @@ ADNI data were obtained from the [Alzheimer’s Disease Neuroimaging Initiative 
 
 * Please follow the [instructions](https://adni.loni.usc.edu/data-samples/access-data/) to apply for access to the data
 * Task: Predict Standardized Uptake Value Ratio (SUVR) from PET scans of human brains
-* We treat each scanner vector as a silo. There are 9 silos in total.
+* We treat each scanner vendor as a silo. There are 9 silos in total.
 * Dataset: From the ADNI database, we specifically take a subset of PET scans (with AV45 and preprocessing step ```Coreg, Avg, Std Img and Vox Siz, Uniform Resolution```) that have existing labels obtained from UC Berkeley study (also part of the database). The label information can be found on the website under 
 ```study_data/imaging/PET_Image_Analysis/UC_Berkeley-AV45-Analysis-*```.
  Meta data specifying the silo attribute would be automatically included in the downloaded zip files, together with images in DCM format. 
