@@ -1,0 +1,14 @@
+python3  -u main.py --dataset=adni \
+            --optimizer=ditto \
+            --num_clusters=2 \
+            --server_lr=10 \
+            --learning_rate=0.01 \
+            --ft_learning_rate=0.001 \
+            --num_rounds=40 \
+            --eval_every=1 \
+            --clients_per_round=9 \
+            --batch_size=64 \
+            --model='cnn_regression' \
+            --lam=1 \
+            --local_epochs=1 \
+            --finetune_iters=1000 \
