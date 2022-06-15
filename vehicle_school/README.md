@@ -1,6 +1,6 @@
 # Motley: Benchmarking Heterogeneity and Personalization in Federated Learning
 
-This repo contains **cross-silo** experiments for the **Vehicle/School** datasets.
+This repo contains **cross-silo** experiments for the **Vehicle/School** datasets. The implemention is written in Python with [JAX](https://github.com/google/jax) and [Haiku](https://github.com/deepmind/dm-haiku).
 
 ## Directory Structure
 
@@ -30,7 +30,7 @@ bash runners/<dataset>/run_<method>.sh [--flags]
 Below we provide examples for running experiments with a few hyperparameters.
 See `main.py` for the full list of hyperparameters.
 
-### Single run
+### Example: single run
 
 For example, local training on Vehicle can be run as
 
@@ -38,7 +38,7 @@ For example, local training on Vehicle can be run as
 bash runners/vehicle/run_local.sh --num_rounds 500 --client_lr 0.03 --repeat 5
 ```
 
-### Hyperparameter sweep
+### Example: hyperparameter sweep
 
 Hyperparameter grid search is done via the `--sweep` flag and at least one list
 of hyperparameters to sweep (e.g. `--client_lrs` , `--server_lrs` with a trailing "s";
@@ -62,3 +62,7 @@ See `experiments/` scripts for examples; e.g. FedAvg training can be done via
 ```fish
 fish experiments/vehicle/fedavg.fish
 ```
+
+## Hyperparameters
+
+See our paper for more details.

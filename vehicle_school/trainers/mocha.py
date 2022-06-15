@@ -32,7 +32,7 @@ class Mocha(BaseTrainerLocal):
     Sigma = np.eye(self.num_clients) * (1.0 / self.num_clients)
 
     # Optimizer shared for every client (re-init before client work)
-    # Note that Adaptive server optimizers don't apply to Mocha since it has fixed update rule.
+    # Note that adaptive server optimizers don't apply due to the fixed update rule.
     opt = optimizers.sgd(self.lr)
 
     @jit
@@ -105,8 +105,7 @@ class Mocha(BaseTrainerLocal):
         # After every Mocha outer iteration, updates all weights together
         local_params = new_local_params
 
-      # Update Sigma after `mocha_outer` iterations of simultaneous client updates
-      # (i.e. communication rounds)
+      # Update Sigma after `mocha_outer` iterations of simultaneous client updates.
       Sigma = update_sigma(local_params)
 
       if i % self.args['eval_every'] == 0:
