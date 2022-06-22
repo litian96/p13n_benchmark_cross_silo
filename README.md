@@ -2,7 +2,7 @@
 
 This directory contains code to reproduce the cross-silo experiments in our paper:
 
-> [Motley: Benchmarking Heterogeneity and Personalization in Federated Learning]()
+> [Motley: Benchmarking Heterogeneity and Personalization in Federated Learning](https://arxiv.org/abs/2206.09262)
 
 
 Please see each data folder for instructions.
