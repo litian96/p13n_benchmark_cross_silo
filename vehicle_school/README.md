@@ -1,6 +1,8 @@
 # Motley: Benchmarking Heterogeneity and Personalization in Federated Learning
 
-This repo contains **cross-silo** experiments for the **Vehicle/School** datasets. The implemention is written in Python with [JAX](https://github.com/google/jax) and [Haiku](https://github.com/deepmind/dm-haiku).
+This repo contains **cross-silo** experiments for the **Vehicle/School** datasets of the paper "Motley: Benchmarking Heterogeneity and Personalization in Federated Learning". [[PDF](https://arxiv.org/pdf/2206.09262)]
+
+ The implemention is written in Python with [JAX](https://github.com/google/jax) and [Haiku](https://github.com/deepmind/dm-haiku).
 
 ## Directory Structure
 
@@ -32,7 +34,7 @@ See `main.py` for the full list of hyperparameters.
 
 ### Example: single run
 
-For example, local training on Vehicle can be run as
+Local training on Vehicle can be run as
 
 ```bash
 bash runners/vehicle/run_local.sh --num_rounds 500 --client_lr 0.03 --repeat 5
@@ -57,7 +59,7 @@ The full results will then be stored in `logs/fedavg_sweep/full_results.txt`.
 The best test metric over the sweep based on validation performance will be in `logs/fedavg_sweep/best_result.txt`.
 The result format is [[mean over clients, std over clients], [std of the mean, std of the std]]; see `main.py` for more details.
 
-See `experiments/` scripts for examples; e.g. FedAvg training can be done via
+See `experiments/` scripts for more examples; e.g. FedAvg training can be done via
 
 ```fish
 fish experiments/vehicle/fedavg.fish
@@ -65,4 +67,4 @@ fish experiments/vehicle/fedavg.fish
 
 ## Hyperparameters
 
-See our paper for more details.
+See the appendix of our [paper](https://arxiv.org/pdf/2206.09262) for more details.
