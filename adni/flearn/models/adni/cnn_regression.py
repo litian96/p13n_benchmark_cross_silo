@@ -14,7 +14,7 @@ class Model(object):
         self.graph = tf.Graph()
         with self.graph.as_default():
             #tf.set_random_seed(123 + seed)
-            self.features, self.labels, self.train_op, self.grads, self.loss = self.create_model(optimizer)
+            self.features, self.labels, self.train_op, self.grads, self.loss, self.predictions, self.embeddings = self.create_model(optimizer)
             self.saver = tf.train.Saver()
 
         config = tf.ConfigProto()
@@ -41,7 +41,7 @@ class Model(object):
         grads, _ = zip(*grads_and_vars)
         train_op = optimizer.apply_gradients(grads_and_vars, global_step=tf.train.get_global_step())
 
-        return features, labels, train_op, grads, loss
+        return features, labels, train_op, grads, loss, preds, dense
 
     def set_params(self, model_params=None):
         if model_params is not None:
@@ -49,6 +49,18 @@ class Model(object):
                 all_vars = tf.trainable_variables()
                 for variable, value in zip(all_vars, model_params):
                     variable.load(value, self.sess)
+
+    def get_embeddings(self, data):
+        with self.graph.as_default():
+            embeddings = self.sess.run(self.embeddings, feed_dict={self.features: np.array(data['x']),
+                                                      self.labels: np.array(data['y'])})
+        return embeddings
+
+    def get_predictions(self, data):
+        with self.graph.as_default():
+            predictions = self.sess.run(self.predictions, feed_dict={self.features: np.array(data['x']),
+                                                      self.labels: np.array(data['y'])})
+        return predictions
 
     def get_params(self):
         with self.graph.as_default():

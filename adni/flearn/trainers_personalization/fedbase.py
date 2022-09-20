@@ -66,6 +66,41 @@ class BaseFedarated(object):
             losses.append(cl * 1.0)
         return np.array(num_samples), np.array(tot_correct), np.array(losses)
 
+    def test_loss_global(self):
+        losses = []
+        num_samples = []
+        self.client_model.set_params(self.latest_model)
+        for c in self.clients:
+            cl, ns = c.get_test_loss()
+            losses.append(cl * 1.0)
+            num_samples.append(ns)
+
+        return np.array(num_samples), np.array(losses)
+
+    def train_loss_global(self):
+        losses = []
+        num_samples = []
+        self.client_model.set_params(self.latest_model)
+        for c in self.clients:
+            cl, ns = c.get_train_loss()
+            losses.append(cl * 1.0)
+            num_samples.append(ns)
+
+        return np.array(num_samples), np.array(losses)
+
+
+    def validation_loss_global(self):
+        '''tests self.latest_model on given clients
+        '''
+        num_samples = []
+        losses = []
+        self.client_model.set_params(self.latest_model)
+        for c in self.clients:
+            cl, ns = c.get_val_loss()
+            losses.append(cl * 1.0)
+            num_samples.append(ns)
+        return np.array(num_samples), np.array(losses)
+
     def train_loss(self, models):
         num_samples = []
         losses = []
