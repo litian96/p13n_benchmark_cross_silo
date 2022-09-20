@@ -13,6 +13,8 @@ from jax_utils import model_multiply_scalar
 from jax_utils import model_divide
 from jax_utils import model_sqrt
 
+# NOTE: The server optimizers below can be made functional to improve performance
+# by `jit`ing the `step` functions directly.
 
 class FedAvgM:
   def __init__(self, params_template, server_lr, momentum=0.9):

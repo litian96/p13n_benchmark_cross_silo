@@ -17,7 +17,9 @@ import parallel_utils
 from trainers.local import Local
 from trainers.fedavg import FedAvg
 from trainers.ditto import Ditto
+from trainers.knnper import kNNPer
 from trainers.mocha import Mocha
+from trainers.mrmtl import MRMTL
 from trainers.ifca_benchmark import IFCA_Benchmark
 from trainers.finetune_benchmark import Finetune_Benchmark
 
@@ -27,7 +29,7 @@ def read_options():
     parser.add_argument('--trainer',
                         help='the algorithm to run',
                         type=str,
-                        choices=('local', 'fedavg', 'finetune', 'ifca',  'mocha', 'ditto'),
+                        choices=('local', 'fedavg', 'finetune', 'ifca',  'mocha', 'ditto', 'mrmtl', 'knnper'),
                         default='fedavg')
     # Datasets
     parser.add_argument('--dataset',
@@ -169,6 +171,15 @@ def read_options():
                         help='Number of clusters for FedAvg (IFCA)',
                         type=int,
                         default=1)
+    parser.add_argument('--knn_neighbors',
+                        help='Number of neighbors for kNN-Per',
+                        type=int,
+                        default=10)
+    parser.add_argument('--knn_weights',
+                        help='Weights for the neighbors when making predictions for kNN',
+                        type=str,
+                        choices=('uniform', 'distance'),
+                        default='distance')
 
     # Hyperparameter parallel sweeping args
     parser.add_argument('--sweep',
@@ -198,7 +209,7 @@ def read_options():
                         nargs='+',
                         type=float)
     parser.add_argument('--lambdas',
-                        help='sweep lambda values (regularization strength for MTL)',
+                        help='sweep lambda values (e.g. regularization strength for MTL)',
                         nargs='+',
                         type=float)
     parser.add_argument('--mocha_outers',
@@ -292,26 +303,25 @@ def main(options, run_idx=None):
 
     ##### Create Trainers #####
     if options['trainer'] == 'fedavg':
-        t = FedAvg(options, dataset)
-        result = t.train()
+        trainer = FedAvg(options, dataset)
     elif options['trainer'] == 'local':
-        t = Local(options, dataset)
-        result = t.train()
+        trainer = Local(options, dataset)
     elif options['trainer'] == 'ditto':
-        t = Ditto(options, dataset)
-        result = t.train()
+        trainer = Ditto(options, dataset)
+    elif options['trainer'] == 'knnper':
+        trainer = kNNPer(options, dataset)
     elif options['trainer'] == 'mocha':
-        t = Mocha(options, dataset)
-        result = t.train()
+        trainer = Mocha(options, dataset)
+    elif options['trainer'] == 'mrmtl':
+        trainer = MRMTL(options, dataset)
     elif options['trainer'] == 'ifca':
-        t = IFCA_Benchmark(options, dataset)
-        result = t.train()
+        trainer = IFCA_Benchmark(options, dataset)
     elif options['trainer'] == 'finetune':
-        t = Finetune_Benchmark(options, dataset)
-        result = t.train()
+        trainer = Finetune_Benchmark(options, dataset)
     else:
         raise ValueError(f'Unknown trainer `{options["trainer"]}`')
 
+    result = trainer.train()
     # Run garbage collection to ensure finished runs don't keep unnecessary memory
     gc.collect()
     print(f'Outputs stored at {options["outdir"]}')
