@@ -8,7 +8,7 @@ from flearn.utils.model_utils import read_data
 
 # GLOBAL PARAMETERS
 OPTIMIZERS = ['fedavg', 'local', 'clustering', 'ensemble', 'fedavgM',
-              'ditto']
+              'ditto', 'knn']
 DATASETS = ['adni']
 
 
@@ -108,7 +108,7 @@ def read_options():
     learner = getattr(mod, 'Model')
 
     # load selected trainer
-    if parsed['optimizer'] in ['ditto', 'local', 'clustering', 'ensemble']:
+    if parsed['optimizer'] in ['ditto', 'local', 'clustering', 'ensemble', 'knn']:
         opt_path = 'flearn.trainers_personalization.%s' % parsed['optimizer']
     else:
         opt_path = 'flearn.trainers_global.%s' % parsed['optimizer']

@@ -39,6 +39,12 @@ class Client(object):
         '''get model gradient'''
         return self.model.get_gradients(mini_batch_data)
 
+    def get_embeddings(self, data):
+        return self.model.get_embeddings(data)
+
+    def get_predictions(self, data):
+        return self.model.get_predictions(data)
+
     def get_train_loss(self):
         return self.model.get_loss(self.train_data), self.train_samples
 
